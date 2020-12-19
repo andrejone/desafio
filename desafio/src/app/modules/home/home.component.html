@@ -1,0 +1,91 @@
+<mat-card class="bg-danger" *ngIf="mensagem != null">
+    <mat-card-content class="pl-4 pr-4 text-white">
+        {{mensagem}}
+    </mat-card-content>
+</mat-card>
+<br/>
+<form>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Informe o código do país que deseja pesquisar</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="p-4">
+            <div class="form-group row">
+                <div class="col-sm-6" *ngIf="codigoFormControl.value == null || codigoFormControl.value == ''">
+                    <mat-form-field>
+                        <mat-label>Selecione o código do país</mat-label>
+                        <mat-select [formControl]="paisFormControl">
+                            <mat-option>Selecione</mat-option>
+                            <mat-option *ngFor="let c of paises" [value]="c.id">{{c.id}} - {{c.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <!-- <div class="col-sm-6" *ngIf="paisFormControl.value == null || paisFormControl.value == ''">
+                    <mat-form-field>
+                        <mat-label>Informe o código do país</mat-label>
+                        <input matInput [formControl]="codigoFormControl">
+                    </mat-form-field>
+                </div> -->
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button type="submit" class="ml-2" color="primary" (click)="pesquisar()"><mat-icon>search</mat-icon> Pesquisar</button>
+            <button mat-raised-button type="submit" class="ml-2" color="accent" (click)="limpar()"><mat-icon>clear</mat-icon> Limpar</button>
+        </mat-card-actions>
+    </mat-card>
+</form>
+<br/>
+<mat-card *ngIf="indicadores.length > 0">
+    <mat-card-header>
+        <mat-card-title>Resultado</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="p-4">
+        <mat-table #table [dataSource]="datasource">
+    
+            <!-- Position Column -->
+            <ng-container matColumnDef="position">
+                <mat-header-cell *matHeaderCellDef> <b> No. </b> </mat-header-cell>
+                <mat-cell *matCellDef="let element; let rIndex = index;"> {{(paginator.pageIndex * paginator.pageSize)+rIndex+1}} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="data">
+                <mat-header-cell *matHeaderCellDef> <b> Data </b> </mat-header-cell>
+                <mat-cell *matCellDef="let element; "> {{element.date}} </mat-cell>
+            </ng-container>
+    
+    
+            <ng-container matColumnDef="idPais">
+                <mat-header-cell *matHeaderCellDef> <b> ID País </b> </mat-header-cell>
+                <mat-cell *matCellDef="let element; "> {{element.country != null ? element.country.id : ''}} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="pais">
+                <mat-header-cell *matHeaderCellDef> <b> País </b> </mat-header-cell>
+                <mat-cell *matCellDef="let element; "> {{element.country != null ? element.country.value : ''}} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="countryiso3code">
+                <mat-header-cell *matHeaderCellDef> <b> ISO Code </b> </mat-header-cell>
+                <mat-cell *matCellDef="let element; "> {{element.countryiso3code}} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="observacao">
+                <mat-header-cell *matHeaderCellDef> <b> Indicador </b> </mat-header-cell>
+                <mat-cell *matCellDef="let element; "> {{element.indicator != null ? element.indicator.value : 'Não se aplica'}} </mat-cell>
+            </ng-container>
+    
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    
+        <mat-paginator #paginator
+            [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 20]"
+            [showFirstLastButtons]="true">
+        </mat-paginator>
+    </mat-card-content>
+</mat-card>
+
+<button mat-fab class="float-button" *ngIf="showProgress">
+	<mat-spinner color="warn" diameter="25" strokeWidth="5"></mat-spinner>
+</button>

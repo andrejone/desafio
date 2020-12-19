@@ -1,0 +1,32 @@
+.float-button {
+	position:fixed;
+	/* width:60px;
+	height:60px; */
+	top: 30px;
+	left: 48vw;
+	background-color:white !important;
+	color:#FFF;
+	/* border-radius: 5px; */
+	text-align:center;
+    /* box-shadow: 2px 2px 3px #999; */
+    z-index: 1;
+}
+
+.mat-column-position {
+    max-width: 80px;
+    min-width: 60px;
+}
+
+.mat-column-data,
+.mat-column-countryiso3code,
+.mat-column-idPais {
+    max-width: 150px;
+}
+
+.mat-column-pais {
+    max-width: 200px;
+}
+
+.mat-column-observacao {
+    min-width: 200px;
+}

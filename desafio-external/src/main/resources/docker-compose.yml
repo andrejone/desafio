@@ -1,0 +1,7 @@
+version: "3.7" # specify docker-compose version
+services:
+  web: 
+#    image: desafio/desafio-external-service
+    build: .
+    ports:
+      - "8080:8080" #specify ports forewarding

@@ -1,0 +1,4 @@
+FROM openjdk:8
+COPY target/desafio-external-*.jar desafio-external.jar
+EXPOSE 8080
+ENTRY ["java", "-jar", "desafio-external-1.0-SNAPSHOT-runner.jar"]
